@@ -1,0 +1,21 @@
+{
+    "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
+    "cmake.preferredGenerators": [
+        "Ninja",
+        "Unix Makefiles"
+    ],
+    "cmake.configureSettings": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+    },
+    "cmake.debugConfig": {
+        "stopAtEntry": false,
+        "MIMode": "lldb",
+        "miDebuggerPath": "lldb-mi",
+        "cwd": "${workspaceFolder}",
+        "logging": {
+            "trace": false,
+            "engineLogging": false,
+            "traceResponse": false
+        }
+    },
+}
