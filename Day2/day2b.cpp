@@ -3,10 +3,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <charconv>
 
 class Game {
  public:
-  Game(const std::string& gameStr) {
+  Game(const std::string_view gameStr) {
     const std::string colors[] = {"red", "green", "blue"};
     m_red = 0, m_green = 0, m_blue = 0;
 
@@ -14,18 +15,19 @@ class Game {
     auto pos = gameStr.find(": ");
     auto idStr = gameStr.substr(0, pos);
     auto setsStr = gameStr.substr(pos + 2);
-    m_id = std::stoi(idStr.substr(5));
+    std::from_chars(idStr.begin(), idStr.end(), m_id);
 
-    auto sets = std::vector<std::string>();
+    auto sets = std::vector<std::string_view>();
     strToVec(setsStr, "; ", sets);
 
     for (auto& setStr : sets) {
-      auto cubes = std::vector<std::string>();
+      auto cubes = std::vector<std::string_view>();
       strToVec(setStr, ", ", cubes);
 
       for (auto& cube : cubes) {
         pos = cube.find(" ");
-        int count = std::stoi(cube.substr(0, pos));
+        int count;
+        std::from_chars(cube.begin(), cube.end(), count);
         auto color = cube.substr(pos + 1);
 
         if (color == "red") {
@@ -45,8 +47,8 @@ class Game {
   inline const int blue() { return m_blue; }
 
  private:
-  void strToVec(const std::string& str, const std::string& delimiter,
-                std::vector<std::string>& vec) {
+  void strToVec(const std::string_view str, const std::string_view& delimiter,
+                std::vector<std::string_view>& vec) {
     size_t begin = 0, end = 0;
     while ((end = str.find(delimiter, begin)) != std::string::npos) {
       vec.push_back(str.substr(begin, end - begin));
