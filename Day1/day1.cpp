@@ -1,8 +1,9 @@
 #include <filesystem>
-#include <fstream>
 #include <functional>
 #include <iostream>
 #include <string>
+
+#include "commonIO.hpp"
 
 int find_digit(std::string_view line, int pos, std::function<bool(int)> cond,
                std::function<void(int&)> step) {
@@ -46,16 +47,14 @@ int main(int argc, char* argv[]) {
     path = std::filesystem::path(argv[1]);
   }
 
-  if (!std::filesystem::exists(path)) {
-    std::cerr << "File not found: " << path << std::endl;
-    return 1;
-  }
-
-  std::ifstream infile{path};
-  std::string line;
+  std::string content = *readFileC(path);
+  std::string_view view(content);
+  int start = 0, end = 0;
   int sum = 0;
   int sum_v2 = 0;
-  while (std::getline(infile, line)) {
+
+  while ((end = view.find('\n', start)) != std::string::npos) {
+    auto line = view.substr(start, end - start);
     const auto length = line.length();
 
     int first = find_digit(
@@ -72,6 +71,7 @@ int main(int argc, char* argv[]) {
 
     sum += first * 10 + last;
     sum_v2 += first_v2 * 10 + last_v2;
+    start = end + 1;
   }
   std::cout << "1: the sum of all of the calibration values is : " << sum << "\n";
   std::cout << "2: the sum of all of the calibration values is : " << sum_v2 << "\n";

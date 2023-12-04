@@ -24,6 +24,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+add_subdirectory(common)
 add_subdirectory(Day1)
 add_subdirectory(Day2)
 add_subdirectory(Day3)

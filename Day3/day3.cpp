@@ -1,34 +1,11 @@
 #include <charconv>
 #include <expected>
 #include <filesystem>
-#include <fstream>
 #include <iostream>
-#include <sstream>
 #include <string>
 #include <string_view>
 
-enum class io_errc {
-  file_not_found,
-  failed_to_open_file,
-  failed_to_read_file,
-  failed_to_write_file,
-};
-
-std::expected<std::string, io_errc> readFile(std::filesystem::path& path) {
-  std::string str;
-  std::string error;
-  if (!std::filesystem::exists(path)) {
-    return std::unexpected{io_errc::file_not_found};
-  }
-  std::ifstream in(path, std::ios::in | std::ios::binary);
-  if (in) {
-    std::ostringstream contents;
-    contents << in.rdbuf();
-    in.close();
-    return (contents.str());
-  }
-  return std::unexpected{io_errc::failed_to_read_file};
-}
+#include "commonIO.hpp"
 
 class TextMatrix {
  public:
@@ -139,7 +116,7 @@ int main(int argc, char* argv[]) {
     path = std::filesystem::path(argv[1]);
   }
 
-  auto schematic_txt = *readFile(path);
+  auto schematic_txt = *readFileC(path);
   auto schematic = TextMatrix{std::move(schematic_txt)};
 
   int sum_part1 = 0, sum_part2 = 0;
