@@ -1,5 +1,7 @@
 #include "commonFn.hpp"
 
+#include <string>
+
 void strSplit(const std::string_view str, const std::string_view delimiter,
               std::vector<std::string_view>& vec) {
   size_t begin = 0, end = 0;
