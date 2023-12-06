@@ -1,6 +1,5 @@
 set(SOURCE_FILES commonIO.cpp commonFn.cpp)
 
-
 add_library(common_lib STATIC ${SOURCE_FILES})
 
 target_include_directories(common_lib

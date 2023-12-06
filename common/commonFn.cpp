@@ -11,20 +11,3 @@ void strSplit(const std::string_view str, const std::string_view delimiter,
   }
   vec.push_back(str.substr(begin));
 }
-
-void forEachNumber(std::string_view str, std::function<void(int)> apply) {
-  size_t pos = 0;
-  while (pos < str.size()) {
-    size_t size = 0;
-    while (std::isdigit(str[pos + size])) {
-      ++size;
-    }
-    if (size > 0) {
-      auto numStr = str.substr(pos, size);
-      int num;
-      std::from_chars(numStr.begin(), numStr.end(), num);
-      apply(num);
-    }
-    pos += size + 1;
-  }
-}

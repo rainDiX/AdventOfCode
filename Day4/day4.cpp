@@ -27,7 +27,7 @@ void parseCard(const std::string_view cardStr, Card& card) {
   auto rollStr = numbersStr.substr(pos + 3);
 
   card.winning.clear();
-  forEachNumber(winStr, [&card](int n) { card.winning.push_back(n); });
+  forEachNumber<int>(winStr, [&card](int n) { card.winning.push_back(n); });
 
   card.points = 0;
   card.win_count = 0;
@@ -37,7 +37,7 @@ void parseCard(const std::string_view cardStr, Card& card) {
       card.win_count += 1;
     }
   };
-  forEachNumber(rollStr, calculateScore);
+  forEachNumber<int>(rollStr, calculateScore);
 }
 
 int cardCount(std::vector<int>& wins) {
